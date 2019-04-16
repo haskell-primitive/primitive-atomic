@@ -13,7 +13,7 @@ import Data.Primitive (toArrayArray#,fromArrayArray#)
 import GHC.Exts (Any,MutableArrayArray#,MutableArray#,ArrayArray#,Int(I#))
 import GHC.Exts (casArray#,isTrue#,(==#),unsafeCoerce#)
 
--- | Given an array, an offset in Int units, the expected old value,
+-- | Given an array, an offset, the expected old value,
 -- and the new value, perform an atomic compare and swap i.e. write
 -- the new value if the current value matches the provided old value.
 -- Returns the value of the element before the operation. Implies a
