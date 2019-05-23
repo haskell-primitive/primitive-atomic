@@ -8,10 +8,10 @@ module Data.Primitive.Unlifted.Atomic
   ) where
 
 import Control.Monad.Primitive (PrimMonad,PrimState,primitive)
-import Data.Primitive (MutableUnliftedArray(..),PrimUnlifted)
-import Data.Primitive (toArrayArray#,fromArrayArray#)
-import GHC.Exts (Any,MutableArrayArray#,MutableArray#,ArrayArray#,Int(I#))
+import GHC.Exts (Any,MutableArrayArray#,MutableArray#,Int(I#))
 import GHC.Exts (casArray#,isTrue#,(==#),unsafeCoerce#)
+import Data.Primitive.Unlifted.Array (MutableUnliftedArray(..))
+import Data.Primitive.Unlifted.Class (PrimUnlifted(..))
 
 -- | Given an array, an offset, the expected old value,
 -- and the new value, perform an atomic compare and swap i.e. write
@@ -33,8 +33,8 @@ casUnliftedArray (MutableUnliftedArray arr#) (I# i#) old new =
   -- All of this unsafeCoercing is really nasty business. This will go away
   -- once https://github.com/ghc-proposals/ghc-proposals/pull/203 happens.
   primitive $ \s0 ->
-    let !uold = (unsafeCoerce# :: ArrayArray# -> Any) (toArrayArray# old)
-        !unew = (unsafeCoerce# :: ArrayArray# -> Any) (toArrayArray# new)
+    let !uold = (unsafeCoerce# :: Unlifted a -> Any) (toUnlifted# old)
+        !unew = (unsafeCoerce# :: Unlifted a -> Any) (toUnlifted# new)
      in case casArray# ((unsafeCoerce# :: MutableArrayArray# (PrimState m) -> MutableArray# (PrimState m) Any) arr#) i# uold unew s0 of
-          (# s1, n, ur #) -> (# s1, (isTrue# (n ==# 0# ),fromArrayArray# ((unsafeCoerce# :: Any -> ArrayArray#) ur)) #)
+          (# s1, n, ur #) -> (# s1, (isTrue# (n ==# 0# ),fromUnlifted# ((unsafeCoerce# :: Any -> Unlifted a) ur)) #)
 
