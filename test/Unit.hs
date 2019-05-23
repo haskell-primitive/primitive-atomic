@@ -1,6 +1,7 @@
 {-# language MultiWayIf #-}
 
 import Data.Primitive.Unlifted.Atomic
+import Data.Primitive.Unlifted.Array
 import Data.Primitive
 import Control.Monad (when)
 
