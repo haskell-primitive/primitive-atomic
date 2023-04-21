@@ -23,7 +23,7 @@ import GHC.Exts (casArray#,isTrue#,(==#),unsafeCoerce#)
 -- resources, have good guarantees about pointer equality. With these
 -- types, this function is much easier to reason about than @casArray@.
 casUnliftedArray :: forall m a. (PrimMonad m, PrimUnlifted a)
-  => MutableUnliftedArray (PrimState m) a -- ^ prim array
+  => MutableUnliftedArray (PrimState m) a -- ^ array
   -> Int -- ^ index
   -> a -- ^ expected old value
   -> a -- ^ new value
