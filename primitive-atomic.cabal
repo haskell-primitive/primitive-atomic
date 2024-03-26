@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name: primitive-atomic
-version: 0.1.0.1
+version: 0.1.0.2
 synopsis: Wrappers for primops around atomic operations
 homepage: https://github.com/andrewthad/primitive-atomic
 license: BSD-3-Clause
@@ -22,7 +22,7 @@ library
   build-depends:
     , base >=4.11.1 && <5
     , primitive >= 0.7 && <0.10
-    , primitive-unlifted >= 0.1 && <0.2
+    , primitive-unlifted >= 2.1
   hs-source-dirs: src
   default-language: Haskell2010
   ghc-options: -Wall
